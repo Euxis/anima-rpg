@@ -19,7 +19,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        cameraTransform.position = Vector2.Lerp(playerTransform.position, cameraTransform.position, 0.01f);
+        cameraTransform.position = Vector2.Lerp(cameraTransform.position, playerTransform.position, 0.01f);
         
     }
 }
