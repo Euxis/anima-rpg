@@ -632,7 +632,19 @@ MonoBehaviour:
     m_ActionId: e790ec8e-afaa-406a-8f16-6e31a173d82c
     m_ActionName: default/sprint[/Keyboard/z]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415609221}
+        m_TargetAssemblyTypeName: PlayerRaycast, Assembly-CSharp
+        m_MethodName: GetInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f8e9d7c4-c55a-41a4-9aff-6117c896a221
     m_ActionName: default/interact[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0

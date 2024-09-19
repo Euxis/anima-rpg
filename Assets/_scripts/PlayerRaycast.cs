@@ -8,12 +8,22 @@ public class PlayerRaycast : MonoBehaviour
     // script to cast a boxcast for interactions
     [SerializeField] private Transform transformPlayer;
 
+    [SerializeField]
     private Vector2 playerDirection;
     private Vector2 boxSize = new Vector2(0.5f, 0.5f);
+    private float boxLength = 3.0f;
+
+    // band aid fix for now
+    [SerializeField]
+    private Vector2 lastDirection;
 
     private LayerMask layerMask;
 
     private RaycastHit2D boxHit;
+
+    private SpriteRenderer spriteRenderer;
+
+    private Interactable scriptInteract;
 
     private void Awake()
     {
@@ -22,24 +32,45 @@ public class PlayerRaycast : MonoBehaviour
 
     private void Update()
     {
-        DrawBoxCast(transformPlayer.position, playerDirection, boxSize, 0f, 1.5f);
-
+        DrawBoxCast(transformPlayer.position, lastDirection, boxSize, 0f, boxLength);
     }
 
     // get input from input manager, cast boxcast depending on y/x vector
-
     public void SendBoxcast(InputAction.CallbackContext context)
     {
         playerDirection = context.ReadValue<Vector2>();
 
-        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, playerDirection, 1f);
-
-        if (boxHit.transform != null)
+        // if the current player direction is DIFFERENT from the last direction faced, but NOT (0,0)
+        // then update it
+        if(playerDirection != lastDirection && playerDirection.x != 0 || playerDirection.y != 0)
         {
-            Debug.Log("Hit: " + boxHit.collider.tag);
-
+            lastDirection = playerDirection;
         }
 
+        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
+        
+        // if the boxcast sees an interactable, tell the interactable to highlight
+        if (boxHit.collider.gameObject != null) {
+            boxHit.collider.gameObject.TryGetComponent<SpriteRenderer>(out spriteRenderer);
+
+            spriteRenderer.color = Color.red;
+        }
+    }
+
+    public void GetInteract(InputAction.CallbackContext context)
+    {
+        // send out a boxcast from the last direction faced
+        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
+
+        // if the interact button is pressed, check if the player is looking at anything
+        if (context.performed) {
+            if (boxHit.collider != null) {
+                Debug.Log("Looking at " + boxHit.collider.gameObject);
+            }
+            else {
+                Debug.Log("Nothing to look at");
+            }
+        }
     }
 
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)

@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class Interactable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // GENERIC INTERACTABLE CLASS
+
+    private SpriteRenderer spriteRenderer;
+
+    public virtual void Interact() {
+        Debug.Log("basic interact");
+    } 
+
+    private void Awake()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void SelectHighlight(bool b) {
+        if (b)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else {
+            spriteRenderer.color = Color.white;
+        }
     }
 }
