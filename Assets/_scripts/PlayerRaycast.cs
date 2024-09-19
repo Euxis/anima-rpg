@@ -11,7 +11,7 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField]
     private Vector2 playerDirection;
     private Vector2 boxSize = new Vector2(0.5f, 0.5f);
-    private float boxLength = 3.0f;
+    private float boxLength = 2.3f;
 
     // band aid fix for now
     [SerializeField]
@@ -23,6 +23,7 @@ public class PlayerRaycast : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    [SerializeField]
     private Interactable scriptInteract;
 
     private void Awake()
@@ -33,11 +34,30 @@ public class PlayerRaycast : MonoBehaviour
     private void Update()
     {
         DrawBoxCast(transformPlayer.position, lastDirection, boxSize, 0f, boxLength);
+
+        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
+
+        // if the boxcast sees an interactable, tell the interactable to highlight
+        if (boxHit.collider != null)
+        {
+            if(boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
+            {
+                scriptInteract.SelectHighlight(true);
+            }
+        }
+
+        // if the player looks away,
+        if (scriptInteract != null && boxHit.collider == null) {
+
+            // reset the last interactable highlight
+            scriptInteract.SelectHighlight(false);
+        }
     }
 
-    // get input from input manager, cast boxcast depending on y/x vector
+    // method for updating player direction
     public void SendBoxcast(InputAction.CallbackContext context)
     {
+        // read vector from movement input
         playerDirection = context.ReadValue<Vector2>();
 
         // if the current player direction is DIFFERENT from the last direction faced, but NOT (0,0)
@@ -45,15 +65,6 @@ public class PlayerRaycast : MonoBehaviour
         if(playerDirection != lastDirection && playerDirection.x != 0 || playerDirection.y != 0)
         {
             lastDirection = playerDirection;
-        }
-
-        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
-        
-        // if the boxcast sees an interactable, tell the interactable to highlight
-        if (boxHit.collider.gameObject != null) {
-            boxHit.collider.gameObject.TryGetComponent<SpriteRenderer>(out spriteRenderer);
-
-            spriteRenderer.color = Color.red;
         }
     }
 
@@ -65,10 +76,9 @@ public class PlayerRaycast : MonoBehaviour
         // if the interact button is pressed, check if the player is looking at anything
         if (context.performed) {
             if (boxHit.collider != null) {
-                Debug.Log("Looking at " + boxHit.collider.gameObject);
-            }
-            else {
-                Debug.Log("Nothing to look at");
+                if (boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
+                    scriptInteract.Interact();
+                }
             }
         }
     }

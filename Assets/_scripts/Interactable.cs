@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     // GENERIC INTERACTABLE CLASS
 
     private SpriteRenderer spriteRenderer;
 
-    public virtual void Interact() {
-        Debug.Log("basic interact");
-    } 
+    public abstract void Interact();
 
     private void Awake()
     {

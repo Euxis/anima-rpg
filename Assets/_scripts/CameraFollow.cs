@@ -9,8 +9,6 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private Transform playerTransform;
 
-
-
     void Start()
     {
         // for readability
@@ -19,7 +17,6 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        cameraTransform.position = Vector2.Lerp(cameraTransform.position, playerTransform.position, 0.01f);
-        
+        cameraTransform.position = Vector2.Lerp(cameraTransform.position, playerTransform.position, 0.01f);  
     }
 }
