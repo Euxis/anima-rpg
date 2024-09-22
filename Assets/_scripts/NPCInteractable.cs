@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class NPCInteractable : Interactable
 {
-    public DialogueManager dialogueManager;
     public GameObject objDM;
+    private DialogueSequence npcDialogue;
 
     [SerializeField]
-    public string[] s;
+    private ControlManager controlManager;
 
+    
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (!TryGetComponent<DialogueSequence>(out npcDialogue))
+        {
+            Debug.LogError("No DialogueSequence attached");
+            return;
+        }
+    }
     public override void Interact()
     {
-        // send text lines to dialogueManager
-        dialogueManager.DoDialogue(s);
+        controlManager.ToDialogue();
+
+        var line = npcDialogue.GetCurrentLine();
+        DialogueManager.Instance.DisplayDialogue(line);
     }
 }

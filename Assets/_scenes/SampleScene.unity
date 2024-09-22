@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -317,20 +314,32 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
-      propertyPath: s.Array.data[0]
+      propertyPath: 's.Array.data[0]'
       value: test1
       objectReference: {fileID: 0}
     - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
-      propertyPath: s.Array.data[1]
+      propertyPath: 's.Array.data[1]'
       value: test2
       objectReference: {fileID: 0}
     - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
-      propertyPath: s.Array.data[2]
+      propertyPath: 's.Array.data[2]'
       value: test3
       objectReference: {fileID: 0}
     - target: {fileID: 5699594967321128811, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_Name
       value: NPCPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[0].m_TableEntryReference.m_KeyId
+      value: 72749834240
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[0].m_TableReference.m_TableCollectionName
+      value: GUID:30c0341ef73e2c34bbe73affbfa5d298
       objectReference: {fileID: 0}
     - target: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -377,6 +386,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+--- !u!1 &825301779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825301781}
+  - component: {fileID: 825301780}
+  m_Layer: 0
+  m_Name: ControlManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &825301780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825301779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931af6ae6cf5e524989401bf84acea5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+--- !u!4 &825301781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825301779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.256887, y: 1.9866092, z: -0.028913058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &970172204
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,15 +611,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -629,6 +685,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -700,6 +758,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415609215}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -723,7 +782,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -734,7 +794,6 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &1415609220
@@ -952,7 +1011,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 2b3e687e-352f-4b3f-8c04-424eaa93c7b5
-    m_ActionName: default/movement[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionName: 'default/movement[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1415609218}
@@ -968,7 +1027,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: e790ec8e-afaa-406a-8f16-6e31a173d82c
-    m_ActionName: default/sprint[/Keyboard/z]
+    m_ActionName: 'default/sprint[/Keyboard/z]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1415609221}
@@ -984,7 +1043,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: f8e9d7c4-c55a-41a4-9aff-6117c896a221
-    m_ActionName: default/interact[/Keyboard/x]
+    m_ActionName: 'default/interact[/Keyboard/x]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1887956310}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6b3307ff-5b2e-42ce-be1d-e4ec35e5481b
+    m_ActionName: 'dialogue/confirm[/Keyboard/x]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: default
@@ -1005,6 +1080,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1887956310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5921025617447629658, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
+  m_PrefabInstance: {fileID: 4610480875015996285}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4610480875015996285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1017,6 +1097,14 @@ PrefabInstance:
       propertyPath: textbox
       value: 
       objectReference: {fileID: 1363461781}
+    - target: {fileID: 2853737934564887234, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853737934564887234, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
+      propertyPath: stringTable
+      value: 
+      objectReference: {fileID: 11400000, guid: 70b353a4250e35a40bda5eeef998c425, type: 2}
     - target: {fileID: 2853737934564887234, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
       propertyPath: locTable.m_TableReference.m_TableCollectionName
       value: GUID:30c0341ef73e2c34bbe73affbfa5d298
@@ -1085,3 +1173,4 @@ SceneRoots:
   - {fileID: 970172207}
   - {fileID: 4610480875015996285}
   - {fileID: 616937048}
+  - {fileID: 825301781}

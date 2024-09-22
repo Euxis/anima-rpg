@@ -11,7 +11,7 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
 
-    private void Awake()
+    protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }

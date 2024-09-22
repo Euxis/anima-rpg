@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1220355080543329275}
   - component: {fileID: 2125390726481676200}
   - component: {fileID: 3515519153699277034}
+  - component: {fileID: 8862707434728801111}
   m_Layer: 0
   m_Name: NPCPrefab
   m_TagString: Untagged
@@ -51,6 +52,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,7 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d978b3821997444c8ac775a01075de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 2853737934564887234, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
   objDM: {fileID: 5699594967321128811}
 --- !u!61 &3515519153699277034
 BoxCollider2D:
@@ -108,6 +110,7 @@ BoxCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5699594967321128811}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -131,7 +134,8 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,6 +146,21 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8862707434728801111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699594967321128811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822e5e77c8515fc43a1808364db78252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues: []
+  references:
+    version: 2
+    RefIds: []

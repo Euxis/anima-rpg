@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.PropertyVariants.TrackedProperties;
 using UnityEngine.Localization.Tables;
@@ -11,61 +12,55 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     public TMP_Text textbox;
 
-    public LocalizedStringTable locTable;
-    public StringTable stringTable;
-
-    [SerializeField]
-    private bool isTableLoaded=false;
+    public static DialogueManager Instance;
 
     private void Awake()
     {
-        // Asynchronously load the StringTable from the LocalizedStringTable
-        locTable.GetTableAsync().Completed += (asyncOperation) =>
+        if (Instance != null && Instance != this)
         {
-            if (asyncOperation.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
-            {
-                stringTable = asyncOperation.Result; // Now you have access to the StringTable
-                Debug.Log("String Table Loaded Successfully");
-                isTableLoaded = true;
-            }
-            else
-            {
-                Debug.LogError("Failed to load String Table");
-            }
-        };
-    }
-
-    public void DoDialogue(string[] s) {
-
-        string subs = s[0];
-        StringTableEntry entry;
-
-        Debug.Log("isTableLoaded: " + isTableLoaded);
-
-        if (!isTableLoaded)
-        {
-            Debug.LogError("String Table not loaded yet!");
-            return; // Prevent null reference exceptions
-        }
-        else { 
-            entry = stringTable.GetEntry(subs);
-
-        }
-
-        // display string one after another
-        Debug.Log(s[0]);
-        
-
-        if (entry != null)
-        {
-            Debug.Log(entry.LocalizedValue);
+            Destroy(this);
         }
         else
         {
-            Debug.LogError("Entry not found.");
+            Instance = this;
         }
+    }
 
-        Debug.Log("here: " + entry.LocalizedValue);
-        textbox.text = entry.LocalizedValue;
+    /// <summary>
+    /// Shows given text on screen
+    /// <para>
+    /// Also makes dialogue box visible
+    /// </para>
+    /// </summary>
+    /// <param name="text"></param>
+    public void DisplayDialogue(string text)
+    {
+        DialogueBoxVisibility(true);
+        textbox.text = text;
+    }
+
+    /// <summary>
+    /// Clears textbox
+    /// </summary>
+    public void ClearText()
+    {
+        textbox.text = string.Empty;
+    }
+
+    /// <summary>
+    /// Changes the visibility of the textbox
+    /// <para>
+    /// Also clears the textbox
+    /// </para>
+    /// </summary>
+    /// <param name="visible"></param>
+    public void DialogueBoxVisibility(bool visible)
+    {
+        ClearText();
+        textbox.gameObject.SetActive(visible);
+    }
+
+    public void AdvanceDialogue(InputAction.CallbackContext context) { 
+        
     }
 }
