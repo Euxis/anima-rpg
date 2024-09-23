@@ -314,6 +314,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: controlManager
+      value: 
+      objectReference: {fileID: 825301780}
+    - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: 's.Array.data[0]'
       value: test1
       objectReference: {fileID: 0}
@@ -331,14 +335,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: dialogues.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: dialogues.Array.data[0].m_TableEntryReference.m_KeyId
+      value: 18148384768
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[1].m_TableEntryReference.m_KeyId
       value: 72749834240
       objectReference: {fileID: 0}
     - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[2].m_TableEntryReference.m_KeyId
+      value: 185522085888
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: dialogues.Array.data[0].m_TableReference.m_TableCollectionName
+      value: GUID:30c0341ef73e2c34bbe73affbfa5d298
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[1].m_TableReference.m_TableCollectionName
+      value: GUID:30c0341ef73e2c34bbe73affbfa5d298
+      objectReference: {fileID: 0}
+    - target: {fileID: 8862707434728801111, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogues.Array.data[2].m_TableReference.m_TableCollectionName
       value: GUID:30c0341ef73e2c34bbe73affbfa5d298
       objectReference: {fileID: 0}
     - target: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
@@ -415,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931af6ae6cf5e524989401bf84acea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 1874632565}
 --- !u!4 &825301781
 Transform:
   m_ObjectHideFlags: 0
@@ -1046,6 +1066,22 @@ MonoBehaviour:
     m_ActionName: 'default/interact[/Keyboard/x]'
   - m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1887956311}
+        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+        m_MethodName: AdvanceDialogue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6b3307ff-5b2e-42ce-be1d-e4ec35e5481b
+    m_ActionName: 'dialogue/confirm[/Keyboard/x]'
+  - m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 1887956310}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
@@ -1058,8 +1094,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 6b3307ff-5b2e-42ce-be1d-e4ec35e5481b
-    m_ActionName: 'dialogue/confirm[/Keyboard/x]'
+    m_ActionId: 5fa9d525-c7a5-4f4d-93b5-cbdb8613f435
+    m_ActionName: 'dialogue/cancel[/Keyboard/c]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: default
@@ -1085,6 +1121,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5921025617447629658, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
   m_PrefabInstance: {fileID: 4610480875015996285}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1887956311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2853737934564887234, guid: b3c981a5d339b4a48ad0ae76258c9a52, type: 3}
+  m_PrefabInstance: {fileID: 4610480875015996285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887956310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3a7c4ba3fca6b42ac21d22d2ad9ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4610480875015996285
 PrefabInstance:
   m_ObjectHideFlags: 0

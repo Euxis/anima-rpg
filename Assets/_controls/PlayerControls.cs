@@ -147,6 +147,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fa9d525-c7a5-4f4d-93b5-cbdb8613f435"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -158,6 +167,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc6a3e6-359f-485f-abdb-92b01a41ac57"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -174,6 +194,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // dialogue
         m_dialogue = asset.FindActionMap("dialogue", throwIfNotFound: true);
         m_dialogue_confirm = m_dialogue.FindAction("confirm", throwIfNotFound: true);
+        m_dialogue_cancel = m_dialogue.FindAction("cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -298,11 +319,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_dialogue;
     private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
     private readonly InputAction m_dialogue_confirm;
+    private readonly InputAction m_dialogue_cancel;
     public struct DialogueActions
     {
         private @PlayerControls m_Wrapper;
         public DialogueActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @confirm => m_Wrapper.m_dialogue_confirm;
+        public InputAction @cancel => m_Wrapper.m_dialogue_cancel;
         public InputActionMap Get() { return m_Wrapper.m_dialogue; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -315,6 +338,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @confirm.started += instance.OnConfirm;
             @confirm.performed += instance.OnConfirm;
             @confirm.canceled += instance.OnConfirm;
+            @cancel.started += instance.OnCancel;
+            @cancel.performed += instance.OnCancel;
+            @cancel.canceled += instance.OnCancel;
         }
 
         private void UnregisterCallbacks(IDialogueActions instance)
@@ -322,6 +348,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @confirm.started -= instance.OnConfirm;
             @confirm.performed -= instance.OnConfirm;
             @confirm.canceled -= instance.OnConfirm;
+            @cancel.started -= instance.OnCancel;
+            @cancel.performed -= instance.OnCancel;
+            @cancel.canceled -= instance.OnCancel;
         }
 
         public void RemoveCallbacks(IDialogueActions instance)
@@ -348,5 +377,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IDialogueActions
     {
         void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

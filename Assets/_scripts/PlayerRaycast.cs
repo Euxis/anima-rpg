@@ -83,6 +83,11 @@ public class PlayerRaycast : MonoBehaviour
         }
     }
 
+    public void GetDialogueAdvance(InputAction.CallbackContext context)
+    {
+
+    }
+
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)
     {
         // Calculate the rotation of the box
