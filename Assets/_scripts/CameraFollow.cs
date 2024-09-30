@@ -10,6 +10,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private Transform playerTransform;
 
+    [SerializeField]
+    private InteractionManager interactionManager;
+
     public Transform dialogueTransform;     // the transform to use during dialogue sequences
 
     // TODO: Add a way to track a different object (i.e. zoom onto an NPC during dialogue)
@@ -37,7 +40,7 @@ public class CameraFollow : MonoBehaviour
     /// Zooms in on the NPC being talked to while keeping the player
     /// in view
     /// </summary>
-    private void DialogueScene() { 
+    private void DialogueMode() { 
     
     }
 }

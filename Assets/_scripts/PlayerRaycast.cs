@@ -3,61 +3,130 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Gets the Interact script from player Boxcast
+/// <para>If the player presses the interact button, will invoke it</para>
+/// </summary>
 public class PlayerRaycast : MonoBehaviour
 {
-    // script to cast a boxcast for interactions
     [SerializeField] private Transform transformPlayer;
 
-    [SerializeField]
-    private Vector2 playerDirection;
-    private Vector2 boxSize = new Vector2(0.5f, 0.5f);
-    private float boxLength = 2.3f;
+    [SerializeField] private ActionMapManager controlManager;
 
-    // band aid fix for now
-    [SerializeField]
+    private ContactFilter2D contactFilter = new ContactFilter2D();
+
+    private Vector2 playerDirection;
+
     private Vector2 lastDirection;
+
+    private Vector2 boxSize = new Vector2(0.5f, 0.5f);
+
+    private float boxLength = 2.3f;
 
     private LayerMask layerMask;
 
+    // BoxCast results
+
     private RaycastHit2D boxHit;
 
-    private SpriteRenderer spriteRenderer;
+    private RaycastHit2D lastBoxHit;
+
+    [SerializeField] public Interactable scriptInteract;
+
+    [SerializeField] private Interactable lastScriptInteract;
+
+    [SerializeField] private RaycastHit2D[] boxHitArray = new RaycastHit2D[10];
 
     [SerializeField]
-    public Interactable scriptInteract;
+    private List<RaycastHit2D> boxHitList;
 
-    [SerializeField]
-    private ActionMapManager controlManager;
+
 
     private void Awake()
     {
         layerMask = LayerMask.GetMask("Interactables");
+
+        contactFilter.SetLayerMask(layerMask);
     }
 
     private void Update()
     {
         DrawBoxCast(transformPlayer.position, lastDirection, boxSize, 0f, boxLength);
 
+        HighlightInteractable();
+    }
+
+    /// <summary>
+    /// If the boxcast sees an interactable, tell it to highlight itself
+    /// <para>If the player looks away, reset the last interactable highlight</para>
+    /// </summary>
+    private void HighlightInteractable() {
+
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
 
-        // if the boxcast sees an interactable, tell the interactable to highlight
-        if (boxHit.collider != null)
+        boxHitArray = Physics2D.BoxCastAll(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
+
+        boxHitList = new List<RaycastHit2D>(boxHitArray);
+
+        lastBoxHit = boxHit;
+
+
+        foreach (RaycastHit2D hit in boxHitList) {
+            Debug.Log(hit);
+        }
+
+        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
+            scriptInteract.SelectHighlight(true);
+        else if (scriptInteract != null) // Check if we need to reset the previous highlight
         {
-            if(boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
+            scriptInteract.SelectHighlight(false);
+            scriptInteract = null; // Clear reference after resetting highlight
+        }
+
+        if (lastBoxHit.collider != boxHit.collider && lastBoxHit.collider.gameObject.TryGetComponent<Interactable>(out lastScriptInteract)) {
+            lastScriptInteract.SelectHighlight(false);
+        }
+
+        foreach (RaycastHit2D hit in boxHitList)
+        {
+            if (hit.collider != boxHit.collider && hit.collider != null && hit.collider.gameObject.TryGetComponent<Interactable>(out Interactable tempInteractable))
             {
-                scriptInteract.SelectHighlight(true);
+                Debug.Log("Cleared " + hit.collider.gameObject);
+                tempInteractable.SelectHighlight(false);
+            }
+
+        }
+
+        boxHitList.Clear();
+
+        // only highlight the first hit
+        /*
+        if (boxHit.collider != null)
+            lastBoxHit = boxHit;
+
+        // if the boxcast sees an interactable, tell the interactable to highlight
+        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
+            scriptInteract.SelectHighlight(true);
+
+        if (lastBoxHit.collider != null && lastBoxHit.collider != boxHit.collider) {
+            if (lastBoxHit.collider.gameObject.TryGetComponent<Interactable>(out lastScriptInteract))
+            {
+                lastScriptInteract.SelectHighlight(false);
             }
         }
 
-        // if the player looks away,
-        if (scriptInteract != null && boxHit.collider == null) {
-
-            // reset the last interactable highlight
+        // If the player looks away, reset the last interactable highlight
+        if (scriptInteract != null && boxHit.collider == null)
+        {
             scriptInteract.SelectHighlight(false);
-        }
+
+        }*/
     }
 
-    // method for updating player direction
+    /// <summary>
+    /// Changes Boxcast direction whenever the player changes direction
+    /// </summary>
+    /// <param name="context"></param>
     public void SendBoxcast(InputAction.CallbackContext context)
     {
         // read vector from movement input
@@ -71,19 +140,21 @@ public class PlayerRaycast : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Sends boxcast from the direction in SendBoxcast()
+    /// <para>If it hits something, get its Interact script and run it</para>
+    /// </summary>
+    /// <param name="context"></param>
     public void GetInteract(InputAction.CallbackContext context)
     {
-        // send out a boxcast from the last direction faced
+        // Send out a boxcast from the last direction faced
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
 
-        // if the interact button is pressed, check if the player is looking at anything
-        if (context.performed) {
-            if (boxHit.collider != null) {
-                if (boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
-                    controlManager.ToDialogue();
-                    scriptInteract.Interact();
-                }
-            }
+        // If the interact button is pressed, check if the player is looking at anything
+        if (context.performed && boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
+            controlManager.ToDialogue();
+            scriptInteract.Interact();
         }
     }
 

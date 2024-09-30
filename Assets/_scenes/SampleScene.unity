@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 1415609217}
+  interactionManager: {fileID: 0}
   dialogueTransform: {fileID: 0}
 --- !u!1001 &616937048
 PrefabInstance:
@@ -912,11 +913,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.7534113
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7137519
+      value: -3.97
       objectReference: {fileID: 0}
     - target: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1144,10 +1145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformPlayer: {fileID: 1415609217}
-  playerDirection: {x: 0, y: 0}
-  lastDirection: {x: 0, y: 0}
-  scriptInteract: {fileID: 0}
   controlManager: {fileID: 825301780}
+  scriptInteract: {fileID: 0}
 --- !u!1 &1612513322
 GameObject:
   m_ObjectHideFlags: 0

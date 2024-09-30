@@ -36,7 +36,7 @@ public class DelegateExampleple : MonoBehaviour
         anotherList
             .ForEach(x =>
             {
-                Debug.Log(x);
+                //Debug.Log(x);
             });
     }
 
