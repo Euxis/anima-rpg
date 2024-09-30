@@ -19,15 +19,31 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 18148384768
-    m_Localized: hey there
+    m_Localized: Welcome to the void world.
     m_Metadata:
       m_Items: []
   - m_Id: 72749834240
-    m_Localized: welcome to the world
+    m_Localized: Please, enjoy your stay!
     m_Metadata:
       m_Items: []
   - m_Id: 185522085888
-    m_Localized: there's nothing much to say here tbh
+    m_Localized: ... *ahem*
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3642174532640768
+    m_Localized: Well, uh... Get on with it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667343632392192
+    m_Localized: This is another test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667467213365248
+    m_Localized: To see if the player can interact with more than one NPC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667524687912960
+    m_Localized: Ok thats it
     m_Metadata:
       m_Items: []
   references:

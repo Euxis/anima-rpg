@@ -39,7 +39,4 @@ public class PlayerMovement : MonoBehaviour
             isRun = true;
         }
     }
-
-    
-
 }

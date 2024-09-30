@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
@@ -7,7 +8,8 @@ using UnityEngine.Localization;
 public class DialogueSequence : MonoBehaviour
 {
     [Tooltip("The lines this interactable can say"), SerializeField] private List<LocalizedString> dialogues = new();
-    public int CurrentLine { get; set; }
+    public int CurrentLine { get; private set; }
+    public bool hasTalked = false;              // Did the player finish this NPCs dialogue?
 
     /// <summary>
     /// Retrieves specified dialogue line of this interactable object
@@ -30,6 +32,9 @@ public class DialogueSequence : MonoBehaviour
     /// <returns></returns>
     public string GetCurrentLine()
     {
+        if (CurrentLine > dialogues.Count) {
+            return null;
+        }
         return dialogues[CurrentLine].GetLocalizedString();
     }
 
@@ -41,7 +46,7 @@ public class DialogueSequence : MonoBehaviour
     /// </returns>
     public bool AdvanceDialogue()
     {
-        if (CurrentLine >= dialogues.Count)
+        if (CurrentLine > dialogues.Count)
         {
             return false;
         }
@@ -72,5 +77,28 @@ public class DialogueSequence : MonoBehaviour
         var oldLines = ClearLines();
         dialogues = newLines;
         return oldLines;
+    }
+
+    /// <summary>
+    /// Returns the current line index
+    /// </summary>
+    /// <returns></returns>
+    public int GetCurrentIndex() {
+        return CurrentLine;
+    }
+
+    /// <summary>
+    /// Sets current line to 0
+    /// </summary>
+    public void ResetCurrentLine()
+    {
+        CurrentLine = 0;
+    }
+
+    public bool IsAtEnd() {
+        if (CurrentLine >= dialogues.Count) {
+            return true;
+        }
+        return false;
     }
 }

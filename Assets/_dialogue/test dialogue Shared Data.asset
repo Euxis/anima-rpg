@@ -27,6 +27,22 @@ MonoBehaviour:
     m_Key: test3
     m_Metadata:
       m_Items: []
+  - m_Id: 3642174532640768
+    m_Key: test4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667343632392192
+    m_Key: 2_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667467213365248
+    m_Key: 2_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3667524687912960
+    m_Key: 2_3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

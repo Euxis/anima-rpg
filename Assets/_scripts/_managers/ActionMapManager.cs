@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControlManager : MonoBehaviour
+public class ActionMapManager : MonoBehaviour
 {
     public PlayerInput playerInput;
-
-    private InputActionMap movementMap;
 
     // <summary>
     // Switches to movement action map

@@ -7,12 +7,15 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.PropertyVariants.TrackedProperties;
 using UnityEngine.Localization.Tables;
 
-public class DialogueManager : MonoBehaviour
+public class TextboxManager : MonoBehaviour
 {
     [SerializeField]
     public TMP_Text textbox;
 
-    public static DialogueManager Instance;
+    [SerializeField]
+    private RectTransform panel;
+
+    public static TextboxManager Instance;
 
     private void Awake()
     {
@@ -57,10 +60,7 @@ public class DialogueManager : MonoBehaviour
     public void DialogueBoxVisibility(bool visible)
     {
         ClearText();
+        panel.gameObject.SetActive(visible);
         textbox.gameObject.SetActive(visible);
-    }
-
-    public void AdvanceDialogue(InputAction.CallbackContext context) { 
-        
     }
 }

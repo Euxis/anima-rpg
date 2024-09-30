@@ -24,7 +24,10 @@ public class PlayerRaycast : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
-    private Interactable scriptInteract;
+    public Interactable scriptInteract;
+
+    [SerializeField]
+    private ActionMapManager controlManager;
 
     private void Awake()
     {
@@ -77,15 +80,11 @@ public class PlayerRaycast : MonoBehaviour
         if (context.performed) {
             if (boxHit.collider != null) {
                 if (boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
+                    controlManager.ToDialogue();
                     scriptInteract.Interact();
                 }
             }
         }
-    }
-
-    public void GetDialogueAdvance(InputAction.CallbackContext context)
-    {
-
     }
 
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)
