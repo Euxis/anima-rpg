@@ -31,7 +31,7 @@ public class PlayerRaycast : MonoBehaviour
 
     private RaycastHit2D lastBoxHit;
 
-    [SerializeField] public Interactable scriptInteract;
+    [SerializeField] public NPCInteractionManager scriptInteract;
 
     [SerializeField] private Interactable lastScriptInteract;
 
@@ -45,8 +45,6 @@ public class PlayerRaycast : MonoBehaviour
     private void Awake()
     {
         layerMask = LayerMask.GetMask("Interactables");
-
-        contactFilter.SetLayerMask(layerMask);
     }
 
     private void Update()
@@ -61,66 +59,11 @@ public class PlayerRaycast : MonoBehaviour
     /// <para>If the player looks away, reset the last interactable highlight</para>
     /// </summary>
     private void HighlightInteractable() {
-
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
 
-        boxHitArray = Physics2D.BoxCastAll(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
-
-        boxHitList = new List<RaycastHit2D>(boxHitArray);
-
-        lastBoxHit = boxHit;
-
-
-        foreach (RaycastHit2D hit in boxHitList) {
-            Debug.Log(hit);
-        }
-
-        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
-            scriptInteract.SelectHighlight(true);
-        else if (scriptInteract != null) // Check if we need to reset the previous highlight
-        {
-            scriptInteract.SelectHighlight(false);
-            scriptInteract = null; // Clear reference after resetting highlight
-        }
-
-        if (lastBoxHit.collider != boxHit.collider && lastBoxHit.collider.gameObject.TryGetComponent<Interactable>(out lastScriptInteract)) {
-            lastScriptInteract.SelectHighlight(false);
-        }
-
-        foreach (RaycastHit2D hit in boxHitList)
-        {
-            if (hit.collider != boxHit.collider && hit.collider != null && hit.collider.gameObject.TryGetComponent<Interactable>(out Interactable tempInteractable))
-            {
-                Debug.Log("Cleared " + hit.collider.gameObject);
-                tempInteractable.SelectHighlight(false);
-            }
-
-        }
-
-        boxHitList.Clear();
-
-        // only highlight the first hit
-        /*
-        if (boxHit.collider != null)
-            lastBoxHit = boxHit;
-
         // if the boxcast sees an interactable, tell the interactable to highlight
-        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract))
-            scriptInteract.SelectHighlight(true);
-
-        if (lastBoxHit.collider != null && lastBoxHit.collider != boxHit.collider) {
-            if (lastBoxHit.collider.gameObject.TryGetComponent<Interactable>(out lastScriptInteract))
-            {
-                lastScriptInteract.SelectHighlight(false);
-            }
-        }
-
-        // If the player looks away, reset the last interactable highlight
-        if (scriptInteract != null && boxHit.collider == null)
-        {
-            scriptInteract.SelectHighlight(false);
-
-        }*/
+        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<NPCInteractionManager>(out scriptInteract))
+            scriptInteract.OnBoxcastHit();
     }
 
     /// <summary>
@@ -150,12 +93,12 @@ public class PlayerRaycast : MonoBehaviour
     {
         // Send out a boxcast from the last direction faced
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
-
+        /*
         // If the interact button is pressed, check if the player is looking at anything
         if (context.performed && boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
             controlManager.ToDialogue();
-            scriptInteract.Interact();
-        }
+            //scriptInteract.Interact();
+        }*/
     }
 
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)

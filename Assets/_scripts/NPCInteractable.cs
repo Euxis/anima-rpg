@@ -14,6 +14,8 @@ public class NPCInteractable : Interactable
 
     private InputAction cancel;
 
+    [SerializeField] private Rigidbody2D rbPlayer;
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +24,21 @@ public class NPCInteractable : Interactable
         {
             Debug.LogError("No DialogueSequence attached");
             return;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player")) {
+            this.SelectHighlight(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            this.SelectHighlight(false);
         }
     }
 
