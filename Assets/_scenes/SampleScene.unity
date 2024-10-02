@@ -448,6 +448,7 @@ GameObject:
   - component: {fileID: 630963755}
   - component: {fileID: 630963756}
   - component: {fileID: 630963757}
+  - component: {fileID: 630963758}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -484,6 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textboxManager: {fileID: 1887956311}
   actionMapManager: {fileID: 825301780}
+  cameraFollow: {fileID: 519420033}
 --- !u!114 &630963757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,8 +498,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc7ec0b27951704b9289b87c08ef309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRaycast: {fileID: 1415609221}
-  hitObject: {fileID: 0}
+--- !u!114 &630963758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630963754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22aaf47e9b52864483dd4ed4d9ec30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionMapManager: {fileID: 825301780}
 --- !u!4 &633553031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8890290475115398552, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
@@ -560,6 +573,10 @@ PrefabInstance:
       propertyPath: rbPlayer
       value: 
       objectReference: {fileID: 1415609220}
+    - target: {fileID: 2125390726481676200, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 630963756}
     - target: {fileID: 5699594967321128811, guid: 9a43720bf4646af49a2f4a4b3cb387a3, type: 3}
       propertyPath: m_Name
       value: NPCPrefab (3)
@@ -1407,8 +1424,8 @@ MonoBehaviour:
     m_ActionName: 'default/sprint[/Keyboard/z]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1415609221}
-        m_TargetAssemblyTypeName: PlayerRaycast, Assembly-CSharp
+      - m_Target: {fileID: 630963758}
+        m_TargetAssemblyTypeName: PlayerGetInteract, Assembly-CSharp
         m_MethodName: GetInteract
         m_Mode: 0
         m_Arguments:

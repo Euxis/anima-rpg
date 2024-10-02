@@ -5,10 +5,6 @@ using UnityEngine;
 /// </summary>
 public class InteractionManager : MonoBehaviour
 {
-    [SerializeField] private PlayerRaycast playerRaycast;
-
-    [SerializeField] private GameObject hitObject;
-
     private RaycastHit2D hit;
 
     public static InteractionManager Instance;

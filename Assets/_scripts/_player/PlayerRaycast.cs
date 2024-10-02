@@ -26,8 +26,6 @@ public class PlayerRaycast : MonoBehaviour
 
     private RaycastHit2D boxHit;
 
-
-
     private void Update()
     {
         DrawBoxCast(transformPlayer.position, lastDirection, boxSize, 0f, boxLength);
@@ -62,18 +60,6 @@ public class PlayerRaycast : MonoBehaviour
         {
             lastDirection = playerDirection;
         }
-    }
-
-
-    /// <summary>
-    /// Sends boxcast from the direction in SendBoxcast()
-    /// <para>If it hits something, get its Interact script and run it</para>
-    /// </summary>
-    /// <param name="context"></param>
-    public void GetInteract(InputAction.CallbackContext context)
-    {
-        // Send out a boxcast from the last direction faced
-        boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
     }
 
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)

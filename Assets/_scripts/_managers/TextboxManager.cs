@@ -17,6 +17,10 @@ public class TextboxManager : MonoBehaviour
 
     public static TextboxManager Instance;
 
+    private float textWaitTime = 0.1f;
+
+    private bool slowTextSpeed = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,8 +42,9 @@ public class TextboxManager : MonoBehaviour
     /// <param name="text"></param>
     public void DisplayDialogue(string text)
     {
+        StopAllCoroutines();
         DialogueBoxVisibility(true);
-        textbox.text = text;
+        StartCoroutine(TypeText(text));
     }
 
     /// <summary>
@@ -47,6 +52,7 @@ public class TextboxManager : MonoBehaviour
     /// </summary>
     public void ClearText()
     {
+        StopAllCoroutines();
         textbox.text = string.Empty;
     }
 
@@ -62,5 +68,28 @@ public class TextboxManager : MonoBehaviour
         ClearText();
         panel.gameObject.SetActive(visible);
         textbox.gameObject.SetActive(visible);
+    }
+
+    /// <summary>
+    /// Types out text character by character
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    private IEnumerator TypeText(string t) {
+        textWaitTime = 0.1f;
+        slowTextSpeed = false;
+        foreach (char c in t) {
+            if (textWaitTime != 0.001 && !slowTextSpeed)
+            {
+                textWaitTime = Mathf.Lerp(textWaitTime, 0.001f, 0.2f);
+            }
+            else {
+                slowTextSpeed = true;
+                textWaitTime = Mathf.Lerp(0.1f, textWaitTime, 0.2f);
+            }
+            textbox.text += c;
+            yield return new WaitForSeconds(textWaitTime);
+            
+        }
     }
 }

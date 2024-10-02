@@ -26,8 +26,15 @@ public class NPCInteractable : Interactable
     /// </summary>
     public override void Interact()
     {
-        dialogueManager.sequence = npcDialogue;
-        dialogueManager.StartDialogue();
-        
+        if (npcDialogue != null)
+        {
+            dialogueManager.sequence = npcDialogue;
+            dialogueManager.StartDialogue();
+
+        }
+        else {
+            Debug.Log("No dialogue in sequence");
+        }
+
     }
 }

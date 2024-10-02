@@ -9,10 +9,14 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private ActionMapManager actionMapManager;
 
+    [SerializeField] private CameraFollow cameraFollow;
+
     public DialogueSequence sequence { get; set; }
 
     public void StartDialogue() {
+        cameraFollow.DialogueMode(InteractionManager.Instance.GetHit().collider.gameObject.transform);
         textboxManager.DialogueBoxVisibility(true);
+
     }
 
     /// <summary>
@@ -29,7 +33,7 @@ public class DialogueManager : MonoBehaviour
                 ExitDialogue();
                 return;
             }
-
+            textboxManager.ClearText();
             textboxManager.DisplayDialogue(sequence.GetCurrentLine());
 
             // just to really make sure, check again if we're at the end of dialogue
@@ -56,6 +60,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void ExitDialogue()
     {
+        cameraFollow.MovementMode();
+
         actionMapManager.ToMovement();
         sequence.ResetCurrentLine();
         textboxManager.ClearText();
