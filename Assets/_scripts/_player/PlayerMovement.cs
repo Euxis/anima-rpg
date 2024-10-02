@@ -25,11 +25,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reads Vector2 value from player input
+    /// </summary>
+    /// <param name="context"></param>
     public void OnMove(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
     }
 
+    /// <summary>
+    /// Gets run input
+    /// </summary>
+    /// <param name="context"></param>
     public void GetRun(InputAction.CallbackContext context) {
         if (context.canceled)
         {

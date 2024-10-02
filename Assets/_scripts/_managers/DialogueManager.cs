@@ -5,11 +5,9 @@ using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField]
-    private TextboxManager textboxManager;
+    [SerializeField] private TextboxManager textboxManager;
 
-    [SerializeField]
-    private ActionMapManager actionMapManager;
+    [SerializeField] private ActionMapManager actionMapManager;
 
     public DialogueSequence sequence { get; set; }
 

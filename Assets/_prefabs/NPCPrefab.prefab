@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 8890290475115398552}
   - component: {fileID: 1220355080543329275}
   - component: {fileID: 2125390726481676200}
-  - component: {fileID: 3515519153699277034}
   - component: {fileID: 8862707434728801111}
-  - component: {fileID: 6631928225426319752}
+  - component: {fileID: 3515519153699277034}
   m_Layer: 0
   m_Name: NPCPrefab
   m_TagString: Untagged
@@ -58,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7d58d4e19c638e844bf719f582ff388c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,6 +104,23 @@ MonoBehaviour:
   objDM: {fileID: 5699594967321128811}
   dialogueManager: {fileID: 0}
   rbPlayer: {fileID: 0}
+--- !u!114 &8862707434728801111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699594967321128811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822e5e77c8515fc43a1808364db78252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues: []
+  hasTalked: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &3515519153699277034
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,47 +167,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8862707434728801111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5699594967321128811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 822e5e77c8515fc43a1808364db78252, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogues: []
-  hasTalked: 0
-  references:
-    version: 2
-    RefIds: []
---- !u!114 &6631928225426319752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5699594967321128811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647c3193ac77be342838bf558db4919d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2125390726481676200}
-        m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
-        m_MethodName: SelectHighlight
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2

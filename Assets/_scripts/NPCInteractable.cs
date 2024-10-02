@@ -8,13 +8,7 @@ public class NPCInteractable : Interactable
     public GameObject objDM;
     private DialogueSequence npcDialogue;   
     
-
-    [SerializeField]
-    private DialogueManager dialogueManager;
-
-    private InputAction cancel;
-
-    [SerializeField] private Rigidbody2D rbPlayer;
+    [SerializeField] private DialogueManager dialogueManager;
 
     protected override void Awake()
     {
@@ -27,27 +21,11 @@ public class NPCInteractable : Interactable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player")) {
-            this.SelectHighlight(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            this.SelectHighlight(false);
-        }
-    }
-
     /// <summary>
     /// Switches action map dialogue mode
     /// </summary>
     public override void Interact()
     {
-
         dialogueManager.sequence = npcDialogue;
         dialogueManager.StartDialogue();
         

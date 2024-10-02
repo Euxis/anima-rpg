@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public abstract class Interactable : MonoBehaviour
 {
@@ -9,20 +6,57 @@ public abstract class Interactable : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    private new Renderer renderer;
+
+    private Material material;
+
     public abstract void Interact();
+
+    private void Update()
+    {
+        DetectCollision();
+    }
+
+    private void DetectCollision()
+    {
+        if (InteractionManager.Instance.GetHit().collider != null)
+        {
+            if (InteractionManager.Instance.GetHit().collider.gameObject == gameObject)
+            {
+                SelectHighlight(true);
+            }
+            else
+            {
+                SelectHighlight(false);
+            }
+        }
+        else
+        {
+            SelectHighlight(false);
+        }
+    }
 
     protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        renderer = GetComponent<Renderer>();
+        material = renderer.material;
     }
 
-    public void SelectHighlight(bool b) {
+    /// <summary>
+    /// Changes the look of the sprite when its looked at
+    /// <para>Will change later</para>
+    /// </summary>
+    /// <param name="b"></param>
+    public void SelectHighlight(bool b)
+    {
         if (b)
         {
-            spriteRenderer.color = Color.red;
+            material.SetFloat("_OutlineEnabled", 1f);
         }
-        else {
-            spriteRenderer.color = Color.white;
+        else
+        {
+            material.SetFloat("_OutlineEnabled", 0f);
         }
     }
 }

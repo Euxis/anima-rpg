@@ -4,66 +4,47 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Gets the Interact script from player Boxcast
-/// <para>If the player presses the interact button, will invoke it</para>
+/// Gets the object that the player is looking at and passes it to InteractionManager
 /// </summary>
 public class PlayerRaycast : MonoBehaviour
 {
+    // MANAGERS
+
     [SerializeField] private Transform transformPlayer;
 
-    [SerializeField] private ActionMapManager controlManager;
+    // BOXCAST VARIABLES
 
-    private ContactFilter2D contactFilter = new ContactFilter2D();
+    private Vector2 playerDirection;                        // The direction the player is currently facing
 
-    private Vector2 playerDirection;
+    private Vector2 lastDirection;                          // The last direction the player was facing
 
-    private Vector2 lastDirection;
+    private Vector2 boxSize = new Vector2(0.5f, 0.5f);      // The size of the boxcast (width)
 
-    private Vector2 boxSize = new Vector2(0.5f, 0.5f);
+    private float boxLength = 2.3f;                         // The length of the boxcast
 
-    private float boxLength = 2.3f;
-
-    private LayerMask layerMask;
-
-    // BoxCast results
+    // BOXCAST RESULTS
 
     private RaycastHit2D boxHit;
 
-    private RaycastHit2D lastBoxHit;
 
-    [SerializeField] public NPCInteractionManager scriptInteract;
-
-    [SerializeField] private Interactable lastScriptInteract;
-
-    [SerializeField] private RaycastHit2D[] boxHitArray = new RaycastHit2D[10];
-
-    [SerializeField]
-    private List<RaycastHit2D> boxHitList;
-
-
-
-    private void Awake()
-    {
-        layerMask = LayerMask.GetMask("Interactables");
-    }
 
     private void Update()
     {
         DrawBoxCast(transformPlayer.position, lastDirection, boxSize, 0f, boxLength);
-
-        HighlightInteractable();
+        GetBoxHit();
     }
 
     /// <summary>
     /// If the boxcast sees an interactable, tell it to highlight itself
     /// <para>If the player looks away, reset the last interactable highlight</para>
     /// </summary>
-    private void HighlightInteractable() {
+    private void GetBoxHit() {
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
 
-        // if the boxcast sees an interactable, tell the interactable to highlight
-        if (boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<NPCInteractionManager>(out scriptInteract))
-            scriptInteract.OnBoxcastHit();
+        if (boxHit.collider == null)
+            InteractionManager.Instance.ClearHit();
+        else
+            InteractionManager.Instance.SetHit(boxHit);
     }
 
     /// <summary>
@@ -93,12 +74,6 @@ public class PlayerRaycast : MonoBehaviour
     {
         // Send out a boxcast from the last direction faced
         boxHit = Physics2D.BoxCast(transformPlayer.position, boxSize, 0f, lastDirection, boxLength);
-        /*
-        // If the interact button is pressed, check if the player is looking at anything
-        if (context.performed && boxHit.collider != null && boxHit.collider.gameObject.TryGetComponent<Interactable>(out scriptInteract)) {
-            controlManager.ToDialogue();
-            //scriptInteract.Interact();
-        }*/
     }
 
     void DrawBoxCast(Vector2 origin, Vector2 direction, Vector2 size, float angle, float distance)
