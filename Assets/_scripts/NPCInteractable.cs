@@ -33,7 +33,7 @@ public class NPCInteractable : Interactable
 
         }
         else {
-            Debug.Log("No dialogue in sequence");
+            Debug.LogError("No dialogue in sequence");
         }
 
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,10 +11,10 @@ public class DialogueManager : MonoBehaviour
 
     public DialogueSequence sequence { get; set; }
 
-    public void StartDialogue() {
+    public void StartDialogue()
+    {
         cameraFollow.DialogueMode(InteractionManager.Instance.GetHit().collider.gameObject.transform);
-        textboxManager.DialogueBoxVisibility(true);
-
+        
     }
 
     /// <summary>
@@ -24,24 +22,34 @@ public class DialogueManager : MonoBehaviour
     /// <para> If its a new dialogue it will display the first line</para>
     /// </summary>
     /// <param name="context"></param>
-    public void AdvanceDialogue(InputAction.CallbackContext context) {
-
+    public void AdvanceDialogue(InputAction.CallbackContext context)
+    {
+        textboxManager.DialogueBoxVisibility(true);
         if (context.performed)
         {
-            if (sequence.IsAtEnd()) {
-                sequence.hasTalked = true;
-                ExitDialogue();
-                return;
-            }
-            textboxManager.ClearText();
-            textboxManager.DisplayDialogue(sequence.GetCurrentLine());
-
-            // just to really make sure, check again if we're at the end of dialogue
-            if (!sequence.AdvanceDialogue())
+            if (sequence.IsAtEnd() && !textboxManager.IsTyping())
             {
                 sequence.hasTalked = true;
                 ExitDialogue();
                 return;
+            }
+
+            if (textboxManager.IsTyping())
+            {
+                textboxManager.FinishDialogue();
+            }
+            else
+            {
+                textboxManager.ClearText();
+                textboxManager.DoDialogue(sequence.GetCurrentLine());
+
+                // just to really make sure, check again if we're at the end of dialogue
+                if (!sequence.AdvanceDialogue())
+                {
+                    sequence.hasTalked = true;
+                    ExitDialogue();
+                    return;
+                }
             }
         }
     }
@@ -50,7 +58,8 @@ public class DialogueManager : MonoBehaviour
     /// Cancels any dialogue
     /// </summary>
     /// <param name="context"></param>
-    public void CancelDialogue(InputAction.CallbackContext context) {
+    public void CancelDialogue(InputAction.CallbackContext context)
+    {
         ExitDialogue();
         return;
     }
@@ -67,6 +76,4 @@ public class DialogueManager : MonoBehaviour
         textboxManager.ClearText();
         textboxManager.DialogueBoxVisibility(false);
     }
-
-
 }

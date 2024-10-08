@@ -8,6 +8,8 @@ using UnityEngine.Localization;
 public class DialogueSequence : MonoBehaviour
 {
     [Tooltip("The lines this interactable can say"), SerializeField] private List<LocalizedString> dialogues = new();
+
+    [Tooltip("Possible dialougue choices occur at these lines"), SerializeField] private List<LocalizedString> choices = new();
     public int CurrentLine { get; private set; }
     public bool hasTalked = false;              // Did the player finish this NPCs dialogue?
 

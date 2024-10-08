@@ -9,17 +9,19 @@ using UnityEngine.Localization.Tables;
 
 public class TextboxManager : MonoBehaviour
 {
-    [SerializeField]
-    public TMP_Text textbox;
+    private enum TextState { Paused, Typing}
 
-    [SerializeField]
-    private RectTransform panel;
+    [SerializeField] private TextState textState = TextState.Paused;
+
+    [SerializeField] public TMP_Text textbox;
+
+    [SerializeField] private RectTransform panel;
 
     public static TextboxManager Instance;
 
-    private float textWaitTime = 0.1f;
+    private float textWaitTime = 0.02f;
 
-    private bool slowTextSpeed = false;
+    private string inputText;
 
     private void Awake()
     {
@@ -33,6 +35,16 @@ public class TextboxManager : MonoBehaviour
         }
     }
 
+    public bool IsTyping() {
+        if (textState == TextState.Typing)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     /// <summary>
     /// Shows given text on screen
     /// <para>
@@ -40,11 +52,21 @@ public class TextboxManager : MonoBehaviour
     /// </para>
     /// </summary>
     /// <param name="text"></param>
-    public void DisplayDialogue(string text)
+    public void DoDialogue(string text)
     {
+        inputText = text;
         StopAllCoroutines();
+        textState = TextState.Typing;
+        ClearText();
         DialogueBoxVisibility(true);
-        StartCoroutine(TypeText(text));
+        StartCoroutine(TypeText(text));       
+    }
+
+    public void FinishDialogue() {
+        StopAllCoroutines();
+        ClearText();
+        textbox.text = inputText;
+        textState = TextState.Paused;
     }
 
     /// <summary>
@@ -65,7 +87,7 @@ public class TextboxManager : MonoBehaviour
     /// <param name="visible"></param>
     public void DialogueBoxVisibility(bool visible)
     {
-        ClearText();
+        
         panel.gameObject.SetActive(visible);
         textbox.gameObject.SetActive(visible);
     }
@@ -76,20 +98,17 @@ public class TextboxManager : MonoBehaviour
     /// <param name="t"></param>
     /// <returns></returns>
     private IEnumerator TypeText(string t) {
-        textWaitTime = 0.1f;
-        slowTextSpeed = false;
+        
         foreach (char c in t) {
-            if (textWaitTime != 0.001 && !slowTextSpeed)
-            {
-                textWaitTime = Mathf.Lerp(textWaitTime, 0.001f, 0.2f);
-            }
-            else {
-                slowTextSpeed = true;
-                textWaitTime = Mathf.Lerp(0.1f, textWaitTime, 0.2f);
-            }
+            if (c == ',' || c == '.' || c == '!')
+                textWaitTime = 0.5f;
+            else
+                textWaitTime = 0.02f;
+
             textbox.text += c;
             yield return new WaitForSeconds(textWaitTime);
             
         }
+        textState = TextState.Paused;
     }
 }
